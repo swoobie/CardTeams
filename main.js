@@ -11,7 +11,7 @@ var cardToTeamMapping = {
 
 
 
-$.getJSON("https://swoobie.github.io/config/cardToTeamMapping.json",function(data)
+$.getJSON("https://swoobie.github.io/CardTeams/config/cardToTeamMapping.json", function(data)
 {console.log(data)});
 
 
