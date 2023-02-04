@@ -9,6 +9,12 @@ var cardToTeamMapping = {
   "Rian with an I": 	["TeamC"],
 };
 
+
+
+$.getJSON("https://swoobie.github.io/config/cardToTeamMapping.json",function(data)
+{console.log(data)});
+
+
 for (const key of Object.keys(cardToTeamMapping)) {
     var opt = key;
     var el = document.createElement("option");
