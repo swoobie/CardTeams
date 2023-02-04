@@ -11,8 +11,14 @@ var cardToTeamMapping = {
 
 
 
-$.getJSON("https://swoobie.github.io/CardTeams/config/cardToTeamMapping.json", function(data)
-{console.log(data)});
+$.getJSON("https://swoobie.github.io/CardTeams/config/cardToTeamMapping.json", function(data) {
+  console.log(data)
+}).fail(function(){
+  // try loading it from local
+  $.getJSON("./config/cardToTeamMapping.json", function(data) {
+  console.log(data)
+  }).fail(() => console.log("Unable to load the mapping."))
+});
 
 
 for (const key of Object.keys(cardToTeamMapping)) {
