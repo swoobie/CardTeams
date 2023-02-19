@@ -33,3 +33,9 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Updating gh-pages branch
+1. Checkout main and make changes
+2. commit changes on main
+3. Run this to push commit to gh-pages branch:
+  `git subtree push --prefix dist origin gh-pages`
