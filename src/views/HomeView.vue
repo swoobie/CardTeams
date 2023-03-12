@@ -112,11 +112,21 @@ export default {
   <div class="home">
     <CardSelector :cards="Object.keys(this.cardTeamMapping).sort()"
       @card-selected="(selection) => this.cardSelectedEventHandler(selection)" />
-    <TeamResults :teams="this.teams" />
-    <div>
-      <Selection :selectedCards="this.selectedCards" @remove="(card) => this.removeEventHandler(card)" />
+    <div class="results">
+      <div>
+        <Selection :selectedCards="this.selectedCards" @remove="(card) => this.removeEventHandler(card)" />
+      </div>
+      <div>
+        <TeamResults :teams="this.teams" />
+      </div>
     </div>
   </div>
 </template>
 
-
+<style>
+.results {
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+}
+</style>
