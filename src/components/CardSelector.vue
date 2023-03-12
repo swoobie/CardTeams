@@ -1,42 +1,19 @@
-<!-- <script setup>
-import { onMounted } from "vue";
-
-onMounted(async () => {
-
-  
-const res = await fetch('')
-  const response = await fetch("/config/cardToTeamMapping.json");
-  const file = await response.json();
-  console.log("cool file", file);
-});
-
-</script> -->
-
-
 <script>
-
-import cardToTeamMapping from '../config/cardToTeamMapping.json'
-
-console.log(`Mapping loaded: ${JSON.stringify(cardToTeamMapping)}`)
-
 export default {
-  data() {
-    return {
-      mapping: cardToTeamMapping,
-      selected: {}
-    }
+  props: {
+    cards: Array
   },
-  methods: {
-   
-  }
+  emits: ['response']
 }
+
 </script>
 
-
-
+<!-- This component handles displaying UI for selecting a card, along with
+     emitting an event when a selection occurs.
+ -->
 <template>
-    <select v-model="selected">
-  <!-- inline object literal -->
-    <option v-for="card of Object.keys(mapping)">{{ card }}</option>
+    <!-- https://vuejs.org/guide/components/events.html#event-arguments -->
+    <select @change="$emit('response', $event.target.value)">
+    <option v-for="card of cards">{{ card }}</option>
     </select>
 </template>
