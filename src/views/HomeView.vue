@@ -28,6 +28,7 @@ export default {
     parseMapping(cardMappingConfig) {
       console.log("Parsing the config...")
       let newMap = {}
+      let globalTeams = []
       for (let team in cardMappingConfig) {
         console.log("Checking team: " + team)
 
@@ -35,6 +36,12 @@ export default {
         console.log("Full card list is " + JSON.stringify(cards))
 
         for (let card of cards) {
+          // special handling for case where a team can have anyone
+          if (card === "ALL_HEROES") {
+            globalTeams.push(team)
+            continue
+          }
+
           if (!newMap[card])
             newMap[card] = []
 
@@ -42,6 +49,12 @@ export default {
             newMap[card].push(team)
         }
       }
+
+      for (let cardMapping in newMap) {
+        newMap[cardMapping].push(...globalTeams)
+      }
+
+
       return newMap
     },
     removeEventHandler(cardToRemove) {
