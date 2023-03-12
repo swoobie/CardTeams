@@ -6658,12 +6658,12 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const _hoisted_1$1 = { class: "wrapper" };
+const _hoisted_1$3 = { class: "wrapper" };
 const _sfc_main$5 = {
   __name: "Header",
   setup(__props) {
     return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("div", _hoisted_1$1, [
+      return openBlock(), createElementBlock("div", _hoisted_1$3, [
         createBaseVNode("nav", null, [
           createVNode(unref(RouterLink), { to: "/" }, {
             default: withCtx(() => [
@@ -7169,18 +7169,18 @@ const config = {
     "Songbird"
   ],
   "United Heroes": [
-    "ALL HEROES"
+    "ALL_HEROES"
   ]
 };
 const _sfc_main$3 = {
   props: {
     cards: Array
   },
-  emits: ["response"]
+  emits: ["card-selected"]
 };
 function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("select", {
-    onChange: _cache[0] || (_cache[0] = ($event) => _ctx.$emit("response", $event.target.value))
+    onChange: _cache[0] || (_cache[0] = ($event) => _ctx.$emit("card-selected", $event.target.value))
   }, [
     (openBlock(true), createElementBlock(Fragment, null, renderList($props.cards, (card) => {
       return openBlock(), createElementBlock("option", null, toDisplayString(card), 1);
@@ -7190,29 +7190,43 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
 const CardSelector = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$3]]);
 const _sfc_main$2 = {
   props: {
-    selectedCards: Array,
-    cardsMapping: Object
+    teams: Array
   }
 };
+const _hoisted_1$2 = /* @__PURE__ */ createBaseVNode("h1", null, "Team Results for Cards", -1);
 function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("div", null, [
-    createBaseVNode("h1", null, "Team Results for Cards: " + toDisplayString(this.selectedCards), 1)
+    _hoisted_1$2,
+    (openBlock(true), createElementBlock(Fragment, null, renderList(this.teams, (team) => {
+      return openBlock(), createElementBlock("li", null, toDisplayString(team), 1);
+    }), 256))
   ]);
 }
 const TeamResults = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$2]]);
 const _sfc_main$1 = {
   props: {
     selectedCards: Array
-  }
+  },
+  emits: ["remove"]
 };
+const _hoisted_1$1 = /* @__PURE__ */ createBaseVNode("h1", null, "Selected Cards", -1);
+const _hoisted_2$1 = ["onClick"];
 function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
-  return openBlock(), createElementBlock("h1", null, "Selected Cards: " + toDisplayString(this.selectedCards), 1);
+  return openBlock(), createElementBlock(Fragment, null, [
+    _hoisted_1$1,
+    (openBlock(true), createElementBlock(Fragment, null, renderList(this.selectedCards, (card) => {
+      return openBlock(), createElementBlock("li", {
+        onClick: ($event) => _ctx.$emit("remove", card)
+      }, toDisplayString(card), 9, _hoisted_2$1);
+    }), 256))
+  ], 64);
 }
 const Selection = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render$1]]);
 const _sfc_main = {
   data() {
     return {
       selectedCards: [],
+      teams: [],
       cardTeamMapping: {}
     };
   },
@@ -7226,27 +7240,66 @@ const _sfc_main = {
     console.log(`Mapping loaded: ${JSON.stringify(this.cardTeamMapping)}`);
   },
   methods: {
-    setCard(card) {
-      console.log("Selected " + card);
-      this.selectedCards.push(card);
-    },
     // Parsing the map to be Card -> Team format instead of team to card format
     parseMapping(cardMappingConfig) {
       console.log("Parsing the config...");
       let newMap = {};
+      let globalTeams = [];
       for (let team in cardMappingConfig) {
         console.log("Checking team: " + team);
         let cards = cardMappingConfig[team];
         console.log("Full card list is " + JSON.stringify(cards));
         for (let card of cards) {
+          if (card === "ALL_HEROES") {
+            globalTeams.push(team);
+            continue;
+          }
           if (!newMap[card])
             newMap[card] = [];
           if (!newMap[card].includes(team))
             newMap[card].push(team);
         }
       }
-      console.log("New Mapping computed as: \n" + JSON.stringify(newMap));
+      for (let cardMapping in newMap) {
+        newMap[cardMapping].push(...globalTeams);
+      }
       return newMap;
+    },
+    removeEventHandler(cardToRemove) {
+      this.selectedCards = this.selectedCards.filter((card) => card !== cardToRemove);
+      this.updateTeams();
+    },
+    cardSelectedEventHandler(card) {
+      console.log("Selected " + card);
+      this.selectedCards.push(card);
+      this.updateTeams();
+    },
+    updateTeams() {
+      let teamSet = /* @__PURE__ */ new Set();
+      for (let card of this.selectedCards) {
+        let tmpSet = /* @__PURE__ */ new Set();
+        for (let team of this.cardTeamMapping[card]) {
+          tmpSet.add(team);
+        }
+        if (teamSet.size === 0) {
+          teamSet = new Set(tmpSet);
+        } else {
+          teamSet = this.intersection(teamSet, tmpSet);
+        }
+      }
+      this.teams = [...teamSet];
+    },
+    intersection(setA, setB) {
+      const _intersection = /* @__PURE__ */ new Set();
+      for (const elem of setB) {
+        if (setA.has(elem)) {
+          _intersection.add(elem);
+        }
+      }
+      return _intersection;
+    },
+    log(message) {
+      console.log(message);
     }
   }
 };
@@ -7261,12 +7314,15 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     createBaseVNode("div", _hoisted_2, [
       createVNode(_component_CardSelector, {
         cards: Object.keys(this.cardTeamMapping).sort(),
-        onResponse: _cache[0] || (_cache[0] = (selection) => this.setCard(selection))
+        onCardSelected: _cache[0] || (_cache[0] = (selection) => this.cardSelectedEventHandler(selection))
       }, null, 8, ["cards"]),
-      createVNode(_component_TeamResults),
+      createVNode(_component_TeamResults, {
+        teams: this.teams
+      }, null, 8, ["teams"]),
       createBaseVNode("div", null, [
         createVNode(_component_Selection, {
-          selectedCards: this.selectedCards
+          selectedCards: this.selectedCards,
+          onRemove: _cache[1] || (_cache[1] = (card) => this.removeEventHandler(card))
         }, null, 8, ["selectedCards"])
       ])
     ])
@@ -7287,7 +7343,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => __vitePreload(() => import("./AboutView-681d5e86.js"), true ? ["assets/AboutView-681d5e86.js","assets/AboutView-5ca11f16.css"] : void 0)
+      component: () => __vitePreload(() => import("./AboutView-1725782c.js"), true ? ["assets/AboutView-1725782c.js","assets/AboutView-5ca11f16.css"] : void 0)
     }
   ]
 });
