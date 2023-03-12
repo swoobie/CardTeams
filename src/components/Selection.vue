@@ -2,7 +2,8 @@
 export default {
     props: {
         selectedCards: Array
-    }
+    },
+    emits: ['remove']
 }
 </script>
 
@@ -13,5 +14,9 @@ export default {
      to remove the card. This is how the deselect will be done.
 -->
 <template>
-    <h1>Selected Cards: {{ this.selectedCards }}</h1>
+    <h1>Selected Cards</h1>
+
+    <li v-for="card in this.selectedCards" @click="$emit('remove', card)">
+    {{ card }}
+    </li>
 </template>

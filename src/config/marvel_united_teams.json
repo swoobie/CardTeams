@@ -35,5 +35,5 @@
 	"Dark Avengers": ["Daken", "Songbird", "U.S. Agent", "Sentry", "Ares", "Moonstone"],
 	"Civil War Team Cap": ["Black Panther", "Storm", "Captain America", "Goliath", "Kate Bishop", "Spectrum", "Hulkling", "Daredevil", "Falcon", "Luke Cage", "Punisher", "Spider-Woman", "Vision", "Human Torch", "Invisible Woman", "Cloak", "Dagger"],
 	"Civil War Team Iron Man": ["Black Widow", "Wasp", "Bishop", "Deadpool", "Iron Man", "Tigra", "Wonder Man", "Yellowjacket", "Iron Spider", "Blade", "She-Hulk", "Mister Fantastic", "Songbird"],
-	"United Heroes": ["ALL HEROES"]
+	"United Heroes": ["ALL_HEROES"]
 }

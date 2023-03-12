@@ -1,8 +1,7 @@
 <script>
 export default {
     props: {
-        selectedCards: Array,
-        cardsMapping: Object
+        teams: Array,
     }
 }
 </script>
@@ -10,6 +9,10 @@ export default {
 <!-- This component displays the possible teams based on the selected cards -->
 <template>
 <div>
-    <h1>Team Results for Cards: {{ this.selectedCards }}</h1>
+    <h1>Team Results for Cards</h1>
+    
+    <li v-for="team in this.teams">
+    {{ team }}
+    </li>
 </div>
 </template>

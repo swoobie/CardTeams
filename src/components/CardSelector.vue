@@ -3,7 +3,7 @@ export default {
   props: {
     cards: Array
   },
-  emits: ['response']
+  emits: ['card-selected']
 }
 
 </script>
@@ -13,7 +13,7 @@ export default {
  -->
 <template>
     <!-- https://vuejs.org/guide/components/events.html#event-arguments -->
-    <select @change="$emit('response', $event.target.value)">
+    <select @change="$emit('card-selected', $event.target.value)">
     <option v-for="card of cards">{{ card }}</option>
     </select>
 </template>
