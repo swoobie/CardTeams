@@ -7188,21 +7188,24 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
   ], 32);
 }
 const CardSelector = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$3]]);
+const TeamResults_vue_vue_type_style_index_0_lang = "";
 const _sfc_main$2 = {
   props: {
     teams: Array
   }
 };
 const _hoisted_1$2 = /* @__PURE__ */ createBaseVNode("h1", null, "Team Results for Cards", -1);
+const _hoisted_2$2 = { class: "teams" };
 function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("div", null, [
     _hoisted_1$2,
     (openBlock(true), createElementBlock(Fragment, null, renderList(this.teams, (team) => {
-      return openBlock(), createElementBlock("li", null, toDisplayString(team), 1);
+      return openBlock(), createElementBlock("li", _hoisted_2$2, toDisplayString(team), 1);
     }), 256))
   ]);
 }
 const TeamResults = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$2]]);
+const Selection_vue_vue_type_style_index_0_lang = "";
 const _sfc_main$1 = {
   props: {
     selectedCards: Array
@@ -7211,17 +7214,27 @@ const _sfc_main$1 = {
 };
 const _hoisted_1$1 = /* @__PURE__ */ createBaseVNode("h1", null, "Selected Cards", -1);
 const _hoisted_2$1 = ["onClick"];
+const _hoisted_3$1 = { class: "card" };
+const _hoisted_4 = { class: "title" };
+const _hoisted_5 = /* @__PURE__ */ createBaseVNode("div", { class: "remove-link" }, "Click to Remove", -1);
 function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock(Fragment, null, [
     _hoisted_1$1,
     (openBlock(true), createElementBlock(Fragment, null, renderList(this.selectedCards, (card) => {
       return openBlock(), createElementBlock("li", {
+        class: "selected-cards",
         onClick: ($event) => _ctx.$emit("remove", card)
-      }, toDisplayString(card), 9, _hoisted_2$1);
+      }, [
+        createBaseVNode("div", _hoisted_3$1, [
+          createBaseVNode("div", _hoisted_4, toDisplayString(card), 1),
+          _hoisted_5
+        ])
+      ], 8, _hoisted_2$1);
     }), 256))
   ], 64);
 }
 const Selection = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render$1]]);
+const HomeView_vue_vue_type_style_index_0_lang = "";
 const _sfc_main = {
   data() {
     return {
@@ -7305,10 +7318,11 @@ const _sfc_main = {
 };
 const _hoisted_1 = /* @__PURE__ */ createBaseVNode("h1", null, "This is a home page.", -1);
 const _hoisted_2 = { class: "home" };
+const _hoisted_3 = { class: "results" };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_CardSelector = resolveComponent("CardSelector");
-  const _component_TeamResults = resolveComponent("TeamResults");
   const _component_Selection = resolveComponent("Selection");
+  const _component_TeamResults = resolveComponent("TeamResults");
   return openBlock(), createElementBlock(Fragment, null, [
     _hoisted_1,
     createBaseVNode("div", _hoisted_2, [
@@ -7316,14 +7330,18 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         cards: Object.keys(this.cardTeamMapping).sort(),
         onCardSelected: _cache[0] || (_cache[0] = (selection) => this.cardSelectedEventHandler(selection))
       }, null, 8, ["cards"]),
-      createVNode(_component_TeamResults, {
-        teams: this.teams
-      }, null, 8, ["teams"]),
-      createBaseVNode("div", null, [
-        createVNode(_component_Selection, {
-          selectedCards: this.selectedCards,
-          onRemove: _cache[1] || (_cache[1] = (card) => this.removeEventHandler(card))
-        }, null, 8, ["selectedCards"])
+      createBaseVNode("div", _hoisted_3, [
+        createBaseVNode("div", null, [
+          createVNode(_component_Selection, {
+            selectedCards: this.selectedCards,
+            onRemove: _cache[1] || (_cache[1] = (card) => this.removeEventHandler(card))
+          }, null, 8, ["selectedCards"])
+        ]),
+        createBaseVNode("div", null, [
+          createVNode(_component_TeamResults, {
+            teams: this.teams
+          }, null, 8, ["teams"])
+        ])
       ])
     ])
   ], 64);
@@ -7343,7 +7361,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => __vitePreload(() => import("./AboutView-1725782c.js"), true ? ["assets/AboutView-1725782c.js","assets/AboutView-5ca11f16.css"] : void 0)
+      component: () => __vitePreload(() => import("./AboutView-d738d6fa.js"), true ? ["assets/AboutView-d738d6fa.js","assets/AboutView-5ca11f16.css"] : void 0)
     }
   ]
 });

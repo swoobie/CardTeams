@@ -48,13 +48,68 @@ nav[data-v-bedb9f68] {
     margin-top: 1rem;
 }
 }
+
+.teams {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px; /* 5px rounded corners */
+  list-style-type: none;
+  padding: 10px;
+  background-color: aliceblue;
+  color: black;
+}
+
+/* On mouse-over, add a deeper shadow */
+.teams:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+.selected-cards {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  background-color: aliceblue;
+  color: black;
+  transition: 0.3s;
+  border-radius: 5px; /* 5px rounded corners */
+  list-style-type: none;
+  padding: 10px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.selected-cards:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+li {
+    margin-bottom: 5px;
+}
+.remove-link {
+    justify-self: end;
+    align-self: center;
+    color: rgb(71, 71, 255);
+}
+.title {
+    justify-self: start;
+    align-self: center;
+}
+.card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.results {
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+}
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
 
-  --vt-c-black: #181818;
+  --vt-c-black: #363636;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
 
@@ -144,7 +199,7 @@ a,
 
   #app {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     padding: 0 2rem;
   }
 }
